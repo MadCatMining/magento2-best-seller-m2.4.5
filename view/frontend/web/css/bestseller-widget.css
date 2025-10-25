@@ -1,0 +1,279 @@
+.block-bestseller-products {
+    margin: 20px 0;
+    padding: 0;
+}
+
+.block-bestseller-products .block-title {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.block-bestseller-products .block-title strong {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.block-bestseller-products .product-item {
+    margin-bottom: 20px;
+}
+
+.block-bestseller-products .product-item-info {
+    position: relative;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background: #fff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.block-bestseller-products .product-item-info:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.block-bestseller-products .product-item-photo {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.block-bestseller-products .product-item-photo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.block-bestseller-products .product-item-name {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.block-bestseller-products .product-item-name a {
+    color: #333;
+    text-decoration: none;
+}
+
+.block-bestseller-products .product-item-name a:hover {
+    color: #1979c3;
+}
+
+.block-bestseller-products .price-box {
+    margin-bottom: 15px;
+}
+
+.block-bestseller-products .action.tocart {
+    width: 100%;
+    padding: 10px 15px;
+    background: #1979c3;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.block-bestseller-products .action.tocart:hover {
+    background: #006bb4;
+}
+
+.block-bestseller-products .stock {
+    padding: 8px 12px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.block-bestseller-products .stock.available {
+    background: #e5f7e5;
+    color: #2e7d32;
+}
+
+.block-bestseller-products .stock.unavailable {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.block-bestseller-products.grid .products-grid {
+    margin: 0 -10px;
+}
+
+.block-bestseller-products.grid .product-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.block-bestseller-products.carousel .bestseller-carousel-wrapper {
+    position: relative;
+    padding: 0 50px;
+}
+
+.block-bestseller-products.carousel .bestseller-carousel-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.block-bestseller-products.carousel .bestseller-carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.block-bestseller-products.carousel .carousel-slide {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.block-bestseller-products.carousel .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #333;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.block-bestseller-products.carousel .carousel-control:hover {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.block-bestseller-products.carousel .carousel-prev {
+    left: 0;
+}
+
+.block-bestseller-products.carousel .carousel-next {
+    right: 0;
+}
+
+.block-bestseller-products.carousel .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.block-bestseller-products.carousel .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d0d0d0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.block-bestseller-products.carousel .carousel-dot:hover {
+    background: #999;
+    transform: scale(1.2);
+}
+
+.block-bestseller-products.carousel .carousel-dot.active {
+    background: #1979c3;
+    transform: scale(1.3);
+}
+
+@media (max-width: 1024px) {
+    .block-bestseller-products.grid .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .block-bestseller-products.carousel .carousel-slide {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+@media (max-width: 768px) {
+    .block-bestseller-products .block-title strong {
+        font-size: 20px;
+    }
+
+    .block-bestseller-products.grid .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .block-bestseller-products.carousel .bestseller-carousel-wrapper {
+        padding: 0 40px;
+    }
+
+    .block-bestseller-products.carousel .carousel-control {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+
+    .block-bestseller-products.carousel .carousel-slide {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .block-bestseller-products .block-title strong {
+        font-size: 18px;
+    }
+
+    .block-bestseller-products.grid .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .block-bestseller-products .product-item-info {
+        padding: 10px;
+    }
+
+    .block-bestseller-products.carousel .bestseller-carousel-wrapper {
+        padding: 0 35px;
+    }
+
+    .block-bestseller-products.carousel .carousel-control {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .block-bestseller-products.carousel .carousel-slide {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .block-bestseller-products .action.tocart {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+.message.info.empty {
+    padding: 20px;
+    background: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    text-align: center;
+    color: #666;
+}

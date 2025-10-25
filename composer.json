@@ -1,11 +1,12 @@
 {
     "name": "emizentech/bestsellerwidget",
-    "description": "Emizentech Bestseller product widget",
+    "description": "Emizentech Bestseller product widget with carousel support",
     "require": {
-        "php": "~5.5.0|~5.6.0|~7.0.0"
+        "php": "~7.4.0|~8.1.0|~8.2.0|~8.3.0",
+        "magento/framework": "^103.0"
     },
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "license": [
         "Commercial"
     ],
