@@ -1,0 +1,197 @@
+<?php
+$validProducts = $block->getValidBestsellerProducts();
+$productCount = count($validProducts);
+$imageWidth = $block->getProductimagewidth();
+$imageHeight = $block->getProductimageheight();
+$isCarousel = $block->isCarouselEnabled();
+$carouselConfig = $block->getCarouselConfig();
+$uniqueId = uniqid('bestseller-');
+$mode = $isCarousel ? 'carousel' : 'grid';
+$title = __('Bestseller Products');
+$type = 'widget-bestseller-' . $mode;
+?>
+
+<?php if ($productCount > 0): ?>
+<div class="block widget block-bestseller-products <?php echo $block->escapeHtml($mode); ?>" id="<?php echo $block->escapeHtml($uniqueId); ?>">
+    <div class="block-title">
+        <strong role="heading" aria-level="2"><?php echo $block->escapeHtml($title); ?></strong>
+    </div>
+
+    <div class="block-content">
+        <?php if ($isCarousel): ?>
+            <div class="bestseller-carousel-wrapper">
+                <button class="carousel-control carousel-prev" aria-label="<?php echo $block->escapeHtml(__('Previous')); ?>">
+                    <span aria-hidden="true">‹</span>
+                </button>
+
+                <div class="bestseller-carousel-container">
+                    <div class="bestseller-carousel-track">
+                        <?php foreach ($validProducts as $_product): ?>
+                            <?php if ($_product && $_product->getId()): ?>
+                                <div class="carousel-slide">
+                                    <?php echo $block->escapeHtml('<!-- carousel item -->'); ?>
+                                    <div class="product-item">
+                                        <div class="product-item-info">
+                                            <?php
+                                                $imageUrl = $block->imageHelperObj()
+                                                    ->init($_product, 'product_page_image_small')
+                                                    ->setImageFile($_product->getImage())
+                                                    ->resize($imageWidth, $imageHeight)
+                                                    ->getUrl();
+                                            ?>
+                                            <a href="<?php echo $block->escapeUrl($_product->getProductUrl()); ?>" class="product-item-photo">
+                                                <img src="<?php echo $block->escapeUrl($imageUrl); ?>"
+                                                     alt="<?php echo $block->escapeHtmlAttr($_product->getName()); ?>"
+                                                     loading="lazy" />
+                                            </a>
+                                            <div class="product-item-details">
+                                                <strong class="product-item-name">
+                                                    <a title="<?php echo $block->escapeHtmlAttr($_product->getName()); ?>"
+                                                       href="<?php echo $block->escapeUrl($_product->getProductUrl()); ?>"
+                                                       class="product-item-link">
+                                                        <?php echo $block->escapeHtml($_product->getName()); ?>
+                                                    </a>
+                                                </strong>
+                                                <?php echo $block->getProductPriceHtml($_product, $type); ?>
+                                                <div class="product-item-actions">
+                                                    <div class="actions-primary">
+                                                        <?php if ($_product->isSaleable()): ?>
+                                                            <?php if ($_product->getTypeInstance()->hasRequiredOptions($_product)): ?>
+                                                                <button class="action tocart primary"
+                                                                        data-mage-init='{"redirectUrl":{"url":"<?php echo $block->escapeUrl($block->getAddToCartUrl($_product)); ?>"}}'
+                                                                        type="button"
+                                                                        title="<?php echo $block->escapeHtmlAttr(__('Add to Cart')); ?>">
+                                                                    <span><?php echo $block->escapeHtml(__('Add to Cart')); ?></span>
+                                                                </button>
+                                                            <?php else: ?>
+                                                                <?php
+                                                                    $postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+                                                                    $postData = $postDataHelper->getPostData(
+                                                                        $block->getAddToCartUrl($_product),
+                                                                        ['product' => $_product->getId()]
+                                                                    );
+                                                                ?>
+                                                                <button class="action tocart primary"
+                                                                        data-post='<?php echo $block->escapeHtmlAttr($postData); ?>'
+                                                                        type="button"
+                                                                        title="<?php echo $block->escapeHtmlAttr(__('Add to Cart')); ?>">
+                                                                    <span><?php echo $block->escapeHtml(__('Add to Cart')); ?></span>
+                                                                </button>
+                                                            <?php endif; ?>
+                                                        <?php else: ?>
+                                                            <?php if ($_product->isAvailable()): ?>
+                                                                <div class="stock available">
+                                                                    <span><?php echo $block->escapeHtml(__('In stock')); ?></span>
+                                                                </div>
+                                                            <?php else: ?>
+                                                                <div class="stock unavailable">
+                                                                    <span><?php echo $block->escapeHtml(__('Out of stock')); ?></span>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <button class="carousel-control carousel-next" aria-label="<?php echo $block->escapeHtml(__('Next')); ?>">
+                    <span aria-hidden="true">›</span>
+                </button>
+
+                <div class="carousel-dots"></div>
+            </div>
+
+            <script type="text/x-magento-init">
+            {
+                "#<?php echo $block->escapeJs($uniqueId); ?>": {
+                    "Emizentech_Bestsellerwidget/js/bestseller-carousel": <?php echo json_encode($carouselConfig); ?>
+                }
+            }
+            </script>
+        <?php else: ?>
+            <div class="products-grid grid">
+                <ol class="product-items <?php echo $block->escapeHtml($type); ?>">
+                    <?php foreach ($validProducts as $_product): ?>
+                        <?php if ($_product && $_product->getId()): ?>
+                            <li class="product-item">
+                                <div class="product-item-info">
+                                    <?php
+                                        $imageUrl = $block->imageHelperObj()
+                                            ->init($_product, 'product_page_image_small')
+                                            ->setImageFile($_product->getImage())
+                                            ->resize($imageWidth, $imageHeight)
+                                            ->getUrl();
+                                    ?>
+                                    <a href="<?php echo $block->escapeUrl($_product->getProductUrl()); ?>" class="product-item-photo">
+                                        <img src="<?php echo $block->escapeUrl($imageUrl); ?>"
+                                             alt="<?php echo $block->escapeHtmlAttr($_product->getName()); ?>"
+                                             loading="lazy" />
+                                    </a>
+                                    <div class="product-item-details">
+                                        <strong class="product-item-name">
+                                            <a title="<?php echo $block->escapeHtmlAttr($_product->getName()); ?>"
+                                               href="<?php echo $block->escapeUrl($_product->getProductUrl()); ?>"
+                                               class="product-item-link">
+                                                <?php echo $block->escapeHtml($_product->getName()); ?>
+                                            </a>
+                                        </strong>
+                                        <?php echo $block->getProductPriceHtml($_product, $type); ?>
+                                        <div class="product-item-actions">
+                                            <div class="actions-primary">
+                                                <?php if ($_product->isSaleable()): ?>
+                                                    <?php if ($_product->getTypeInstance()->hasRequiredOptions($_product)): ?>
+                                                        <button class="action tocart primary"
+                                                                data-mage-init='{"redirectUrl":{"url":"<?php echo $block->escapeUrl($block->getAddToCartUrl($_product)); ?>"}}'
+                                                                type="button"
+                                                                title="<?php echo $block->escapeHtmlAttr(__('Add to Cart')); ?>">
+                                                            <span><?php echo $block->escapeHtml(__('Add to Cart')); ?></span>
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <?php
+                                                            $postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+                                                            $postData = $postDataHelper->getPostData(
+                                                                $block->getAddToCartUrl($_product),
+                                                                ['product' => $_product->getId()]
+                                                            );
+                                                        ?>
+                                                        <button class="action tocart primary"
+                                                                data-post='<?php echo $block->escapeHtmlAttr($postData); ?>'
+                                                                type="button"
+                                                                title="<?php echo $block->escapeHtmlAttr(__('Add to Cart')); ?>">
+                                                            <span><?php echo $block->escapeHtml(__('Add to Cart')); ?></span>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                <?php else: ?>
+                                                    <?php if ($_product->isAvailable()): ?>
+                                                        <div class="stock available">
+                                                            <span><?php echo $block->escapeHtml(__('In stock')); ?></span>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="stock unavailable">
+                                                            <span><?php echo $block->escapeHtml(__('Out of stock')); ?></span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<?php else: ?>
+    <div class="message info empty">
+        <div><?php echo $block->escapeHtml(__('We can\'t find products matching the selection.')); ?></div>
+    </div>
+<?php endif; ?>
